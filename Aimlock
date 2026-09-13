@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070812">
+
+<title>CENTER LOCK</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    color: white;
+    background:
+        radial-gradient(circle at top, #22244a, #070812 55%);
+}
+
+.app {
+    width: min(430px, 100%);
+    padding: 22px;
+
+    background: linear-gradient(
+        180deg,
+        #111329,
+        #080914
+    );
+
+    border: 1px solid #292d50;
+    border-radius: 28px;
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.55);
+}
+
+.logo {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: 4px;
+}
+
+.sub {
+    margin: 6px 0 20px;
+    text-align: center;
+    color: #8e95b8;
+    font-size: 12px;
+}
+
+.card {
+    margin-bottom: 14px;
+    padding: 16px;
+
+    background: #15182c;
+    border: 1px solid #292d50;
+    border-radius: 20px;
+}
+
+label {
+    color: #969dc1;
+    font-size: 12px;
+}
+
+input {
+    width: 100%;
+    margin-top: 9px;
+    padding: 14px;
+
+    color: white;
+    background: #090b18;
+
+    border: 1px solid #34395f;
+    border-radius: 13px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #9b6cff;
+}
+
+button {
+    border: 0;
+    border-radius: 14px;
+    padding: 14px;
+
+    color: white;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.primary {
+    width: 100%;
+    margin-top: 10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #6d5dfc,
+            #b14cff
+        );
+}
+
+.game {
+    width: 100%;
+    font-size: 16px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00a878,
+            #13c98a
+        );
+}
+
+.status {
+    margin-top: 10px;
+    color: #8ef0c5;
+    font-size: 12px;
+}
+
+.expiry {
+    margin-top: 7px;
+    color: #a9afd0;
+    font-size: 12px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.mode {
+    text-align: left;
+
+    background: #101329;
+    border: 1px solid #2b3155;
+}
+
+.mode.active {
+    border-color: #a66cff;
+
+    box-shadow:
+        0 0 18px rgba(139,92,255,.2);
+}
+
+.mode b {
+    display: block;
+    font-size: 15px;
+}
+
+.mode span {
+    color: #858cad;
+    font-size: 11px;
+}
+
+.hidden {
+    display: none;
+}
+
+.note {
+    margin-top: 16px;
+
+    text-align: center;
+    color: #6f7598;
+    font-size: 10px;
+    line-height: 1.5;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <div class="logo">
+        CENTER LOCK
+    </div>
+
+    <div class="sub">
+        CONTROL PANEL • DEMO UI
+    </div>
+
+
+    <!-- LOGIN -->
+    <section id="login" class="card">
+
+        <label>
+            NHẬP KEY
+        </label>
+
+        <input
+            id="key"
+            type="text"
+            placeholder="CENTER-XXXX-XXXX"
+            autocomplete="off"
+        >
+
+        <button
+            class="primary"
+            onclick="login()"
+        >
+            XÁC NHẬN KEY
+        </button>
+
+        <div
+            id="status"
+            class="status"
+        ></div>
+
+    </section>
+
+
+    <!-- APP -->
+    <section
+        id="panel"
+        class="hidden"
+    >
+
+        <div class="card">
+
+            <b>
+                KEY STATUS
+            </b>
+
+            <div
+                id="expiry"
+                class="expiry"
+            ></div>
+
+        </div>
+
+
+        <div class="card">
+
+            <button
+                class="game"
+                onclick="openFF()"
+            >
+                🎮 VÀO GAME FF
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <b>
+                CONTROL MODES
+            </b>
+
+            <div
+                class="grid"
+                style="margin-top:12px"
+            >
+
+                <button
+                    class="mode"
+                    onclick="toggle(this)"
+                >
+                    <b>🎯 Aimlock</b>
+                    <span>Demo UI</span>
+                </button>
+
+
+                <button
+                    class="mode"
+                    onclick="toggle(this)"
+                >
+                    <b>🔴 Headlock</b>
+                    <span>Demo UI</span>
+                </button>
+
+
+                <button
+                    class="mode"
+                    onclick="toggle(this)"
+                >
+                    <b>⚡ Aimbot</b>
+                    <span>Demo UI</span>
+                </button>
+
+
+                <button
+                    class="mode"
+                    onclick="toggle(this)"
+                >
+                    <b>🌀 Aimdrag</b>
+                    <span>Demo UI</span>
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="note">
+        Các nút trên chỉ là giao diện mô phỏng,
+        không can thiệp hoặc inject vào game.
+    </div>
+
+</div>
+
+
+<script>
+
+/*
+    KEY DEMO
+    7 ngày / 30 ngày / 90 ngày
+*/
+
+const KEYS = {
+
+    "CENTER-7D-2026": 7,
+
+    "CENTER-30D-2026": 30,
+
+    "CENTER-90D-2026": 90
+
+};
+
+
+/* KIỂM TRA KEY */
+
+function login() {
+
+    const input =
+        document
+        .getElementById("key");
+
+    const status =
+        document
+        .getElementById("status");
+
+    const key =
+        input.value
+        .trim()
+        .toUpperCase();
+
+
+    if (!KEYS[key]) {
+
+        status.textContent =
+            "❌ Key không hợp lệ.";
+
+        return;
+    }
+
+
+    const storageKey =
+        "center_exp_" + key;
+
+
+    let expiry =
+        localStorage.getItem(storageKey);
+
+
+    /*
+        Lần đầu nhập:
+        tạo thời gian hết hạn.
+    */
+
+    if (!expiry) {
+
+        expiry =
+            Date.now()
+            + KEYS[key]
+            * 24
+            * 60
+            * 60
+            * 1000;
+
+        localStorage.setItem(
+            storageKey,
+            expiry
+        );
+    }
+
+
+    /*
+        Kiểm tra hết hạn
+    */
+
+    if (
+        Date.now()
+        >= Number(expiry)
+    ) {
+
+        status.textContent =
+            "⛔ Key đã hết hạn.";
+
+        return;
+    }
+
+
+    /*
+        Mở giao diện
+    */
+
+    document
+        .getElementById("login")
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById("panel")
+        .classList
+        .remove("hidden");
+
+
+    document
+        .getElementById("expiry")
+        .textContent =
+        "Còn hạn đến: "
+        +
+        new Date(
+            Number(expiry)
+        ).toLocaleString("vi-VN");
+}
+
+
+/* BẬT / TẮT NÚT DEMO */
+
+function toggle(button) {
+
+    button.classList.toggle(
+        "active"
+    );
+}
+
+
+/*
+    Nút VÀO GAME FF
+
+    Chỉ thử mở URL scheme nếu
+    thiết bị hỗ trợ.
+*/
+
+function openFF() {
+
+    window.location.href =
+        "freefire://";
+}
+
+
+/*
+    Khi trang bị rời khỏi:
+    trạng thái các nút demo
+    không được lưu.
+*/
+
+window.addEventListener(
+    "pagehide",
+    function () {
+
+        document
+            .querySelectorAll(
+                ".mode.active"
+            )
+            .forEach(
+                function (button) {
+
+                    button.classList
+                        .remove("active");
+
+                }
+            );
+
+    }
+);
+
+</script>
+
+</body>
+</html>
