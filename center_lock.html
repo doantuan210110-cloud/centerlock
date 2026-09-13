@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070812">
+<title>CENTER LOCK</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;background:#070812;color:#fff;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  display:flex;justify-content:center;align-items:center;padding:20px;
+}
+.app{width:min(430px,100%);background:linear-gradient(180deg,#111329,#080914);
+border:1px solid #292d50;border-radius:28px;padding:22px;box-shadow:0 25px 80px #0008}
+.logo{text-align:center;font-size:30px;font-weight:900;letter-spacing:4px}
+.sub{text-align:center;color:#8e95b8;font-size:12px;margin:6px 0 20px}
+.card{background:#15182c;border:1px solid #292d50;border-radius:20px;padding:16px;margin-bottom:14px}
+label{font-size:12px;color:#969dc1}
+input{width:100%;margin-top:9px;padding:14px;border-radius:13px;border:1px solid #34395f;background:#090b18;color:#fff;outline:none}
+button{border:0;border-radius:14px;padding:14px;font-weight:800;color:#fff;cursor:pointer}
+.primary{width:100%;background:linear-gradient(90deg,#6d5dfc,#b14cff);margin-top:10px}
+.game{width:100%;background:linear-gradient(90deg,#00a878,#13c98a);font-size:16px}
+.status{font-size:12px;margin-top:10px;color:#8ef0c5}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mode{background:#101329;border:1px solid #2b3155;text-align:left}
+.mode.active{border-color:#a66cff;box-shadow:0 0 18px #8b5cff33}
+.mode b{display:block;font-size:15px}.mode span{font-size:11px;color:#858cad}
+.hidden{display:none}.expiry{font-size:12px;color:#a9afd0;margin-top:7px}
+.note{text-align:center;color:#6f7598;font-size:10px;margin-top:16px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="logo">CENTER LOCK</div>
+  <div class="sub">CONTROL PANEL • DEMO UI</div>
+
+  <section id="login" class="card">
+    <label>NHẬP KEY</label>
+    <input id="key" placeholder="CENTER-XXXX-XXXX" autocomplete="off">
+    <button class="primary" onclick="login()">XÁC NHẬN KEY</button>
+    <div id="status" class="status"></div>
+  </section>
+
+  <section id="panel" class="hidden">
+    <div class="card">
+      <div style="font-weight:800">KEY STATUS</div>
+      <div id="expiry" class="expiry"></div>
+    </div>
+
+    <div class="card">
+      <button class="game" onclick="openFF()">🎮 VÀO GAME FF</button>
+    </div>
+
+    <div class="card">
+      <div style="font-weight:800;margin-bottom:12px">CONTROL MODES</div>
+      <div class="grid">
+        <button class="mode" onclick="toggle(this)"><b>🎯 Aimlock</b><span>Demo UI</span></button>
+        <button class="mode" onclick="toggle(this)"><b>🔴 Headlock</b><span>Demo UI</span></button>
+        <button class="mode" onclick="toggle(this)"><b>⚡ Aimbot</b><span>Demo UI</span></button>
+        <button class="mode" onclick="toggle(this)"><b>🌀 Aimdrag</b><span>Demo UI</span></button>
+      </div>
+    </div>
+  </section>
+
+  <div class="note">Các nút trên chỉ là giao diện mô phỏng, không can thiệp hoặc inject vào game.</div>
+</div>
+
+<script>
+/* Demo key có hạn: các key mẫu dưới đây chỉ phục vụ giao diện */
+const KEYS = {
+  "CENTER-7D-2026": 7,
+  "CENTER-30D-2026": 30,
+  "CENTER-90D-2026": 90
+};
+
+function login(){
+  const k=document.getElementById("key").value.trim().toUpperCase();
+  const status=document.getElementById("status");
+  if(!KEYS[k]){status.textContent="❌ Key không hợp lệ.";return}
+  const storage="center_exp_"+k;
+  let exp=localStorage.getItem(storage);
+  if(!exp){
+    exp=Date.now()+KEYS[k]*86400000;
+    localStorage.setItem(storage,exp);
+  }
+  if(Date.now()>=Number(exp)){status.textContent="⛔ Key đã hết hạn.";return}
+  document.getElementById("login").classList.add("hidden");
+  document.getElementById("panel").classList.remove("hidden");
+  document.getElementById("expiry").textContent="Còn hạn đến: "+new Date(Number(exp)).toLocaleString("vi-VN");
+}
+function toggle(btn){btn.classList.toggle("active")}
+function openFF(){
+  // iOS chỉ mở được app nếu hệ thống/game cung cấp URL scheme hợp lệ.
+  window.location.href="freefire://";
+}
+window.addEventListener("pagehide",()=>{
+  document.querySelectorAll(".mode.active").forEach(x=>x.classList.remove("active"));
+});
+</script>
+</body>
+</html>
